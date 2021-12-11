@@ -20,6 +20,7 @@
  ******************************************************************************/
 package com.michaldabski.filemanager.about;
 //zhushi1
+//zhushi2
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
