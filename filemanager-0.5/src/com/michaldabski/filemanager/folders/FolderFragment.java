@@ -20,8 +20,6 @@
  ******************************************************************************/
 package com.michaldabski.filemanager.folders;
 
-import static com.michaldabski.filemanager.R.*;
-
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -121,7 +119,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 			listView.setAdapter(fileAdapter);
 			listView.setSelection(topVisibleItem);
 			
-			getView().findViewById(id.layoutMessage).setVisibility(View.GONE);
+			getView().findViewById(R.id.layoutMessage).setVisibility(View.GONE);
 			listView.setVisibility(View.VISIBLE);
 		}
 	}
@@ -137,8 +135,8 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 		if (getView() != null)
 		{
 			getListView().setVisibility(View.GONE);
-			getView().findViewById(id.layoutMessage).setVisibility(View.VISIBLE);
-			getView().findViewById(id.tvMessage).setVisibility(View.GONE);
+			getView().findViewById(R.id.layoutMessage).setVisibility(View.VISIBLE);
+			getView().findViewById(R.id.tvMessage).setVisibility(View.GONE);
 		}
 	}
 	
@@ -187,9 +185,9 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 		if (view != null)
 		{
 			getListView().setVisibility(View.GONE);
-			view.findViewById(id.layoutMessage).setVisibility(View.VISIBLE);
-			view.findViewById(id.progress).setVisibility(View.GONE);
-			TextView tvMessage = (TextView) view.findViewById(id.tvMessage);
+			view.findViewById(R.id.layoutMessage).setVisibility(View.VISIBLE);
+			view.findViewById(R.id.progress).setVisibility(View.GONE);
+			TextView tvMessage = (TextView) view.findViewById(R.id.tvMessage);
 			tvMessage.setText(message);
 					
 		}
@@ -203,14 +201,14 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 	void showList()
 	{
 		getListView().setVisibility(View.VISIBLE);
-		getView().findViewById(id.layoutMessage).setVisibility(View.GONE);
+		getView().findViewById(R.id.layoutMessage).setVisibility(View.GONE);
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState)
 	{
-		View view = inflater.inflate(layout.fragment_list, container, false);
+		View view = inflater.inflate(R.layout.fragment_list, container, false);
 		this.listView = (AbsListView) view.findViewById(android.R.id.list);
 		
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -243,7 +241,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 				{
 					File[] files =params[0].listFiles(FileUtils.DEFAULT_FILE_FILTER);
 					if (files == null)
-						throw new NullPointerException(getString(string.cannot_read_directory_s, params[0].getName()));
+						throw new NullPointerException(getString(R.string.cannot_read_directory_s, params[0].getName()));
 					if (isCancelled())
 						throw new Exception("Task cancelled");
 					Arrays.sort(files, getPreferences().getFileSortingComparator());
@@ -274,7 +272,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 					
 					if (files.isEmpty())
 					{
-						showMessage(string.folder_empty);
+						showMessage(R.string.folder_empty);
 						return;
 					}
 					adapter = new FileAdapter(getActivity(), files, getApplication().getFileIconResolver());
@@ -308,17 +306,17 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.folder_browser, menu);
 		
-		menu.findItem(id.menu_selectAll).setVisible(!(files == null || files.isEmpty()));
+		menu.findItem(R.id.menu_selectAll).setVisible(!(files == null || files.isEmpty()));
 		
 		if (getApplication().getFavouritesManager().isFolderFavourite(currentDir))
 		{
-			menu.findItem(id.menu_unfavourite).setVisible(true);
-			menu.findItem(id.menu_favourite).setVisible(false);
+			menu.findItem(R.id.menu_unfavourite).setVisible(true);
+			menu.findItem(R.id.menu_favourite).setVisible(false);
 		}
 		else
 		{
-			menu.findItem(id.menu_unfavourite).setVisible(false);
-			menu.findItem(id.menu_favourite).setVisible(true);
+			menu.findItem(R.id.menu_unfavourite).setVisible(false);
+			menu.findItem(R.id.menu_favourite).setVisible(true);
 		}
 	}
 	
@@ -326,13 +324,13 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 	public void onPrepareOptionsMenu(Menu menu)
 	{
 		super.onPrepareOptionsMenu(menu);
-		menu.findItem(id.menu_paste).setVisible(Clipboard.getInstance().isEmpty() == false);
-		menu.findItem(id.menu_navigate_up).setVisible(currentDir.getParentFile() != null);
+		menu.findItem(R.id.menu_paste).setVisible(Clipboard.getInstance().isEmpty() == false);
+		menu.findItem(R.id.menu_navigate_up).setVisible(currentDir.getParentFile() != null);
 	}
 	
 	void showEditTextDialog(int title, int okButtonText, final OnResultListener<CharSequence> enteredTextResult, CharSequence hint, CharSequence defaultValue)
 	{
-		View view = getActivity().getLayoutInflater().inflate(layout.dialog_edittext, (ViewGroup) getActivity().getWindow().getDecorView(), false);
+		View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_edittext, (ViewGroup) getActivity().getWindow().getDecorView(), false);
 		final EditText editText = (EditText) view.findViewById(android.R.id.edit);
 		editText.setHint(hint);
 		editText.setText(defaultValue);
@@ -367,11 +365,11 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 	{
 		switch (item.getItemId())
 		{				
-			case id.menu_selectAll:
+			case R.id.menu_selectAll:
 				selectFiles(this.files);
 				return true;
 				
-			case id.menu_navigate_up:
+			case R.id.menu_navigate_up:
 				String newFolder = currentDir.getParent();
 				if (newFolder != null)
 				{
@@ -385,7 +383,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 				}
 				return true;
 				
-			case id.menu_favourite:
+			case R.id.menu_favourite:				
 				try
 				{
 					final String directoryName = FileUtils.getFolderDisplayName(currentDir);
@@ -399,14 +397,14 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 				}
 				return true;
 				
-			case id.menu_unfavourite:
+			case R.id.menu_unfavourite:				
 				FavouritesManager favouritesManager = getApplication().getFavouritesManager();
 				favouritesManager.removeFavourite(currentDir);
 				getActivity().invalidateOptionsMenu();
 				return true;
 				
-			case id.menu_create_folder:
-				showEditTextDialog(string.create_folder, string.create, new OnResultListener<CharSequence>()
+			case R.id.menu_create_folder:
+				showEditTextDialog(R.string.create_folder, R.string.create, new OnResultListener<CharSequence>()
 				{
 
 					@Override
@@ -419,10 +417,10 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 							if (newFolder.mkdirs())
 							{
 								refreshFolder();
-								Toast.makeText(getActivity(), string.folder_created_successfully, Toast.LENGTH_SHORT).show();
+								Toast.makeText(getActivity(), R.string.folder_created_successfully, Toast.LENGTH_SHORT).show();
 								navigateTo(newFolder);
 							}
-							else Toast.makeText(getActivity(), string.folder_could_not_be_created, Toast.LENGTH_SHORT).show();
+							else Toast.makeText(getActivity(), R.string.folder_could_not_be_created, Toast.LENGTH_SHORT).show();
 							
 						} catch (Exception e)
 						{
@@ -433,11 +431,11 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 				}, "", "");
 				return true;
 				
-			case id.menu_paste:
+			case R.id.menu_paste:
 				pasteFiles();				
 				return true;
 				
-			case id.menu_refresh:
+			case R.id.menu_refresh:
 				refreshFolder();
 				return true;
 		}
@@ -456,7 +454,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 			{
 				super.onPreExecute();
 				progressDialog = new ProgressDialog(getActivity());
-				progressDialog.setTitle(getActivity().getString(string.pasting_files_));
+				progressDialog.setTitle(getActivity().getString(R.string.pasting_files_));
 				progressDialog.setIndeterminate(false);
 				progressDialog.setCancelable(false);
 				progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -513,7 +511,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 				if (result == null)
 				{
 					Clipboard.getInstance().clear();
-					Toast.makeText(getActivity(), string.files_pasted, Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), R.string.files_pasted, Toast.LENGTH_SHORT).show();
 				}
 				else
 				{
@@ -612,13 +610,13 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 		}
 		catch (ActivityNotFoundException e)
 		{
-			startActivity(Intent.createChooser(intent, getString(string.open_file_with_, file.getName())));
+			startActivity(Intent.createChooser(intent, getString(R.string.open_file_with_, file.getName())));
 		}
 		catch (Exception e)
 		{
 			new AlertDialog.Builder(getActivity())
 				.setMessage(e.getMessage())
-				.setTitle(string.error)
+				.setTitle(R.string.error)
 				.setPositiveButton(android.R.string.ok, null)
 				.show();
 		}
@@ -697,12 +695,12 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 		final CharSequence title;
 		final StringBuilder message = new StringBuilder();
 		if (files.size() == 1) title = ((File) files.toArray()[0]).getName();
-		else title = getString(string._d_objects, files.size());
+		else title = getString(R.string._d_objects, files.size());
 		
 		if (files.size() > 1)
 			message.append(FileUtils.combineFileNames(files)).append("\n\n");
-		message.append(getString(string.size_s, FileUtils.formatFileSize(files))).append('\n');
-		message.append(getString(string.mime_type_s, FileUtils.getCollectiveMimeType(files)));
+		message.append(getString(R.string.size_s, FileUtils.formatFileSize(files))).append('\n');
+		message.append(getString(R.string.mime_type_s, FileUtils.getCollectiveMimeType(files)));
 		
 		new AlertDialog.Builder(getActivity())
 			.setTitle(title)
@@ -716,17 +714,17 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 	{
 		switch (item.getItemId())
 		{
-			case id.action_delete:
+			case R.id.action_delete:
 				new AlertDialog.Builder(getActivity())
-					.setMessage(getString(string.delete_d_items_, selectedFiles.size()))
-					.setPositiveButton(string.delete, new OnClickListener()
+					.setMessage(getString(R.string.delete_d_items_, selectedFiles.size()))
+					.setPositiveButton(R.string.delete, new OnClickListener()
 					{
 						
 						@Override
 						public void onClick(DialogInterface dialog, int which)
 						{
 							int n = FileUtils.deleteFiles(selectedFiles);
-							Toast.makeText(getActivity(), getString(string._d_files_deleted, n), Toast.LENGTH_SHORT).show();
+							Toast.makeText(getActivity(), getString(R.string._d_files_deleted, n), Toast.LENGTH_SHORT).show();
 							refreshFolder();
 							finishActionMode(false);
 						}
@@ -735,32 +733,32 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 					.show();
 				return true;
 				
-			case id.action_selectAll:
+			case R.id.action_selectAll:
 				if (isEverythingSelected()) clearFileSelection();
 				else selectFiles(files);
 				return true;
 				
-			case id.action_info:
+			case R.id.action_info:
 				if (selectedFiles.isEmpty()) return true;
 				showFileInfo(selectedFiles);
 				return true;
 
-			case id.action_copy:
+			case R.id.action_copy:
 				Clipboard.getInstance().addFiles(selectedFiles, FileAction.Copy);
-				Toast.makeText(getActivity(), string.objects_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.objects_copied_to_clipboard, Toast.LENGTH_SHORT).show();
 				finishActionMode(false);
 				return true;
 				
-			case id.action_cut:
+			case R.id.action_cut:
 				Clipboard clipboard = Clipboard.getInstance();
 				clipboard.addFiles(selectedFiles, FileAction.Cut);
-				Toast.makeText(getActivity(), string.objects_cut_to_clipboard, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.objects_cut_to_clipboard, Toast.LENGTH_SHORT).show();
 				finishActionMode(false);
 				return true;
 				
-			case id.action_rename:
+			case R.id.action_rename:
 				final File fileToRename = (File) selectedFiles.toArray()[0];
-				showEditTextDialog(fileToRename.isDirectory()? string.rename_folder: string.rename_file, string.rename, new OnResultListener<CharSequence>()
+				showEditTextDialog(fileToRename.isDirectory()?R.string.rename_folder:R.string.rename_file, R.string.rename, new OnResultListener<CharSequence>()
 				{
 					
 					@Override
@@ -773,9 +771,9 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 							{
 								finishActionMode(false);
 								refreshFolder();
-								Toast.makeText(getActivity(), string.file_renamed, Toast.LENGTH_SHORT).show();
+								Toast.makeText(getActivity(), R.string.file_renamed, Toast.LENGTH_SHORT).show();
 							}
-							else Toast.makeText(getActivity(), getActivity().getString(string.file_could_not_be_renamed_to_s, newName), Toast.LENGTH_SHORT).show();
+							else Toast.makeText(getActivity(), getActivity().getString(R.string.file_could_not_be_renamed_to_s, newName), Toast.LENGTH_SHORT).show();
 						} 
 						catch (Exception e)
 						{
@@ -787,11 +785,11 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 				}, fileToRename.getName(), fileToRename.getName());
 				return true;
 			
-			case id.menu_add_homescreen_icon:
+			case R.id.menu_add_homescreen_icon:
 
 				for (File file : selectedFiles)
 					IntentUtils.createShortcut(getActivity(), file);
-				Toast.makeText(getActivity(), string.shortcut_created, Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.shortcut_created, Toast.LENGTH_SHORT).show();
 				actionMode.finish();
 				return true;
 		}
@@ -810,7 +808,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 		{
 			actionMode.invalidate();
 			int count = selectedFiles.size();
-			actionMode.setTitle(getString(string._d_objects, count));
+			actionMode.setTitle(getString(R.string._d_objects, count));
 			
 			actionMode.setSubtitle(FileUtils.combineFileNames(selectedFiles));
 			
@@ -850,7 +848,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 		getActivity().getMenuInflater().inflate(R.menu.action_file, menu);
 		getActivity().getMenuInflater().inflate(R.menu.action_file_single, menu);
 
-		MenuItem shareMenuItem = menu.findItem(id.action_share);
+		MenuItem shareMenuItem = menu.findItem(R.id.action_share);
 		shareActionProvider = (ShareActionProvider) shareMenuItem.getActionProvider();
 		this.preserveSelection = false;
 		return true;
@@ -886,13 +884,13 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 		int count = selectedFiles.size();
 		if (count == 1)
 		{
-			menu.findItem(id.action_rename).setVisible(true);
-			menu.findItem(id.menu_add_homescreen_icon).setTitle(string.add_to_homescreen);
+			menu.findItem(R.id.action_rename).setVisible(true);
+			menu.findItem(R.id.menu_add_homescreen_icon).setTitle(R.string.add_to_homescreen);
 		}
 		else
 		{
-			menu.findItem(id.action_rename).setVisible(false);
-			menu.findItem(id.menu_add_homescreen_icon).setTitle(string.add_to_homescreen_multiple);
+			menu.findItem(R.id.action_rename).setVisible(false);
+			menu.findItem(R.id.menu_add_homescreen_icon).setTitle(R.string.add_to_homescreen_multiple);
 		}
 		
 		// show Share button if no folder was selected
@@ -905,7 +903,7 @@ public class FolderFragment extends Fragment implements OnItemClickListener, OnS
 				break;
 			}
 		}
-		menu.findItem(id.action_share).setVisible(allowShare);
+		menu.findItem(R.id.action_share).setVisible(allowShare);
 		
 		return true;
 	}
