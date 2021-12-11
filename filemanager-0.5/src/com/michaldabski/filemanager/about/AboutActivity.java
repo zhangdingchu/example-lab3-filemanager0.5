@@ -19,7 +19,7 @@
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
 package com.michaldabski.filemanager.about;
-
+//zhushi2
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
