@@ -20,7 +20,6 @@
   CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/selector_list_item"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -35,19 +34,19 @@
         android:layout_centerVertical="true"
         android:padding="@dimen/list_item_padding"
         android:scaleType="center"
-        android:src="@drawable/icon_folder" />
+        android:src="@drawable/icon_folder"
+        android:contentDescription="TODO" />
 
     <TextView
         android:id="@+id/tvFileName"
+        android:layout_marginTop="@dimen/list_item_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="@dimen/list_item_padding"
+        android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/imgFileIcon"
-        android:background="#00BCD4"
-        android:ellipsize="end"
         android:maxLines="1"
+        android:ellipsize="end"
         android:singleLine="true"
         android:text="File name.mp4"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -56,17 +55,11 @@
         android:id="@+id/tvFileDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/tvFileName"
+        android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/imgFileIcon"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="Size: 48mb" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/checkbox_off_background" />
 
 </RelativeLayout>

@@ -23,7 +23,6 @@ package com.michaldabski.filemanager.about;
 //zhushi2
 /////////////////////////////
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -100,8 +99,6 @@ public class AboutActivity extends Activity implements OnClickListener
 		return super.onOptionsItemSelected(item);
 	}
 
-
-
 	@Override
 	public void onClick(View v)
 	{
@@ -133,28 +130,8 @@ public class AboutActivity extends Activity implements OnClickListener
 				}
 				break;
 
-			case R.id.button:
-				try
-				{
-					//Intent intent=new Intent(this,com.michaldabski.filemanager.folders.FolderActivity.class);
-					Intent intent=new Intent(this,com.michaldabski.filemanager.SearchActivity.class);
-					startActivity(intent);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-				break;
-
-			case R.id.button2:
-				try
-				{
-					Intent intent=new Intent(this,com.michaldabski.filemanager.folders.FolderActivity.class);
-					startActivity(intent);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-				break;
+			default:
+				throw new IllegalStateException("Unexpected value: " + v.getId());
 		}
 	}
 	
