@@ -1,5 +1,6 @@
 //func1
 //func2
+//func3
 buildscript {
     repositories {
         //mavenCentral()
