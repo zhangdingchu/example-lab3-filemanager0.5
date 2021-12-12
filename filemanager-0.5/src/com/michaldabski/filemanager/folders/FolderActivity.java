@@ -20,15 +20,13 @@
  ******************************************************************************/
 package com.michaldabski.filemanager.folders;
 
-import static com.michaldabski.filemanager.R.*;
-
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -81,7 +79,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(layout.activity_main);
+		setContentView(R.layout.activity_main);
 
 		setupDrawers();
 		Clipboard.getInstance().addListener(this);
@@ -156,8 +154,8 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 	
 	private void setupDrawers()
 	{
-		this.drawerLayout = (DrawerLayout) findViewById(id.drawer_layout);
-		actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, drawable.ic_drawer, string.open_drawer, string.close_drawer)
+		this.drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.open_drawer, R.string.close_drawer)
 		{
 			boolean actionBarShown = false;
 			
@@ -190,7 +188,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 			}
 		};
 		drawerLayout.setDrawerListener(actionBarDrawerToggle);
-		drawerLayout.setDrawerShadow(drawable.drawer_shadow, Gravity.START);
+		drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.START);
         drawerLayout.setFocusableInTouchMode(false);
 //		drawerLayout.setDrawerShadow(R.drawable.drawer_shadow, Gravity.END);
 		
@@ -217,7 +215,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 		FileManagerApplication application = (FileManagerApplication) getApplication();
         
 		// add listview header to push items below the actionbar
-		ListView navListView = (ListView) findViewById(id.listNavigation);
+		ListView navListView = (ListView) findViewById(R.id.listNavigation);
 		ListViewUtils.addListViewPadding(navListView, this, true);
 		
 		loadFavourites(application.getFavouritesManager());
@@ -227,14 +225,14 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 	void setupClipboardDrawer()
 	{
 		// add listview header to push items below the actionbar
-		ListView clipboardListView = (ListView) findViewById(id.listClipboard);
+		ListView clipboardListView = (ListView) findViewById(R.id.listClipboard);
 		ListViewUtils.addListViewHeader(clipboardListView, this);
 		onClipboardContentsChange(Clipboard.getInstance());
 	}
 	
 	void loadFavourites(FavouritesManager favouritesManager)
 	{
-		ListView listNavigation = (ListView) findViewById(id.listNavigation);
+		ListView listNavigation = (ListView) findViewById(R.id.listNavigation);
 		NavDrawerAdapter navDrawerAdapter = new NavDrawerAdapter(this, new ArrayList<NavDrawerAdapter.NavDrawerItem>(favouritesManager.getFolders()));
 		navDrawerAdapter.setFontApplicator(fontApplicator);
 		listNavigation.setAdapter(navDrawerAdapter);
@@ -247,7 +245,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 		super.onPostCreate(savedInstanceState);
 		actionBarDrawerToggle.syncState();
 		
-		if (getFragmentManager().findFragmentById(id.fragment) == null)
+		if (getFragmentManager().findFragmentById(R.id.fragment) == null)
 		{
 			FolderFragment folderFragment = new FolderFragment();
 			if (getIntent().hasExtra(EXTRA_DIR))
@@ -259,7 +257,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 			
 			getFragmentManager()
 				.beginTransaction()
-				.replace(id.fragment, folderFragment)
+				.replace(R.id.fragment, folderFragment)
 				.commit();
 		}
 	}
@@ -271,7 +269,6 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 		actionBarDrawerToggle.onConfigurationChanged(newConfig);
 	}
 	
-	@SuppressLint("NonConstantResourceId")
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item)
 	{
@@ -279,7 +276,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 			return true;
 		switch (item.getItemId())
 		{
-			case id.menu_about:
+			case R.id.menu_about:
 				startActivity(new Intent(getApplicationContext(), AboutActivity.class));
 				return true;
 		}
@@ -291,7 +288,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 		getFragmentManager()
 			.beginTransaction()
 			.addToBackStack(null)
-			.replace(id.fragment, fragment)
+			.replace(R.id.fragment, fragment)
 			.commit();
 	}
 	
@@ -309,7 +306,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 
     public FolderFragment getFolderFragment()
 	{
-		Fragment fragment = getFragmentManager().findFragmentById(id.fragment);
+		Fragment fragment = getFragmentManager().findFragmentById(R.id.fragment);
 		if (fragment instanceof FolderFragment)
 			return (FolderFragment) fragment;
 		else return null;
@@ -329,13 +326,13 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 	{
 		switch (arg0.getId())
 		{
-			case id.listNavigation:
+			case R.id.listNavigation:
 				NavDrawerItem item = (NavDrawerItem) arg0.getItemAtPosition(arg2);
 				if (item.onClicked(this))
 					drawerLayout.closeDrawers();
 				break;
 				
-			case id.listClipboard:
+			case R.id.listClipboard:
 				FolderFragment folderFragment = getFolderFragment();
 				if (folderFragment != null)
 				{
@@ -358,7 +355,7 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
 	{
 		invalidateOptionsMenu();
 		
-		ListView clipboardListView = (ListView) findViewById(id.listClipboard);
+		ListView clipboardListView = (ListView) findViewById(R.id.listClipboard);
 		
 		if (clipboard.isEmpty() && drawerLayout != null)
 			drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED, Gravity.END);
@@ -393,4 +390,20 @@ public class FolderActivity extends Activity implements OnItemClickListener, Cli
         else return super.onKeyLongPress(keyCode, event);
     }
 
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.app_bar_search:
+				try
+				{
+					;
+				}
+				catch (Exception e)
+				{
+					;
+				}
+				break;
+		}
+	}
 }
