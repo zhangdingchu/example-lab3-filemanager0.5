@@ -1,6 +1,8 @@
 //func1
 //func2
 //func3
+
+//reset
 buildscript {
     repositories {
         //mavenCentral()
