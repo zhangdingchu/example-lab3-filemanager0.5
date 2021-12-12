@@ -1,10 +1,13 @@
 //func1
 //func2
 //func3
+//<<<<<<< HEAD
 
 //reset
 
 //reset_test
+//=======
+//>>>>>>> parent of 00b8d19 (reset_1)
 buildscript {
     repositories {
         //mavenCentral()
