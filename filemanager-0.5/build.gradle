@@ -8,7 +8,11 @@
 //reset_test
 //=======
 //>>>>>>> parent of 00b8d19 (reset_1)
+//<<<<<<< HEAD
 //cherry2
+//=======
+//cherry3
+//>>>>>>> 39921ff (cherry3_test)
 buildscript {
     repositories {
         //mavenCentral()
