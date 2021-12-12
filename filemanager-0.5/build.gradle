@@ -1,4 +1,4 @@
-//func2
+//func1
 buildscript {
     repositories {
         //mavenCentral()
