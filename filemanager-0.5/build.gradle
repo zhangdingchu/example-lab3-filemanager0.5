@@ -3,6 +3,8 @@
 //func3
 
 //reset
+
+//reset_test
 buildscript {
     repositories {
         //mavenCentral()
